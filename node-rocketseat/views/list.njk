@@ -1,0 +1,10 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<h1>Listagem de Usuarios</h1>
+<br>
+    <ul>
+    {% for user in users %}
+         <li>{{user}}</li>
+    {% endfor %}
+    </ul>
+
+<a href="/new">Criar conta</a>

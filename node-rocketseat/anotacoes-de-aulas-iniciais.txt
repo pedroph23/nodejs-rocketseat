@@ -1,0 +1,41 @@
+const express = require("express");
+const app = express();
+
+const middleware = (req, res, next) => {
+  console.log(
+    `HEADER,${req.headers.host} | URL,${req.url} | METHOD,${req.method}`
+  );
+  res.nomeDessaPorra = "Essa porra";
+  return next();
+};
+
+app.use(middleware);
+
+//Rota
+app.get("/login", (req, res) => {
+  res.send("Voce chegou a seu destino");
+});
+
+//login/Pedro
+app.get("/login/:nome", (req, res) => {
+  res.send(`Bem vindo, ${req.params.nome}`);
+});
+
+//login/nome=Pedro
+app.get("/", (req, res) => {
+  res.send(`Bem vindo, ${req.query.nome}`);
+});
+
+//login/Pedro -> res => message:{Bem-vindo,Pedro}
+app.get("/loginJson/:nome", (req, res) => {
+  res.json({
+    message: `Bem-vindo,${req.params.nome}`
+  });
+});
+
+//Rota+middleware
+app.get("/teste/middleware", (req, res) => {
+  res.send(`Bem-vindo ${res.nomeDessaPorra}`);
+});
+
+app.listen(3000);
