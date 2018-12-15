@@ -1,9 +1,8 @@
-const dto = [];
-
 class UserDTO {
   constructor() {}
 
   listUsersDTO(users) {
+    const dto = [];
     users.forEach(user => {
       dto.push({
         id: user["id"],
