@@ -1,0 +1,81 @@
+{% extends "_layouts/auth.njk" %}
+
+
+{% block body %}
+
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <div class="container">
+        <div class="card card-container">
+            <label  for="avatar">
+            <img id="profile-img" class="profile-img-card" type="file" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+            <label>
+            <div hidden="true">
+            <input type="file" name="avatar" id="avatar">
+            </div>
+            <p id="profile-name" class="profile-name-card"></p>
+            <div class="form-signin">
+                <span id="reauth-email" class="reauth-email"></span>
+                <label>Nome</label>
+                <input type="text" name="name" id="name" class="form-control">
+                <label>E-mail</label>
+                <input type="email" name="email" id="email" class="form-control">
+                <label>Senha</label>
+                <input type="password" name="password" id="password" class="form-control">
+                <div id="remember" class="checkbox">
+                    <label for="provider">
+                    <input type="checkbox" id="provider" name="provider" value="1">  Sou cabelereiro
+              </label>
+                </div>
+                <button class="btn btn-primary " onclick="save()">Criar conta</button>
+            </div>
+            <a href="#" class="forgot-password">
+                Já possuo conta
+            </a>
+        </div>
+    </div>
+
+
+
+
+
+
+  <script type="text/javascript">
+    var avatarInput = document.getElementById('avatar')
+    var img = document.querySelector('label[for=avatar] img')
+
+    avatarInput.onchange = function (e) {
+      img.classList.add('preview')
+      img.src = URL.createObjectURL(e.target.files[0])
+    }
+
+function save(){
+var data = {};
+      data.name = document.getElementById("name").value;
+      data.email  = document.getElementById("email").value ;
+      data.avatar  = document.getElementById("avatar").value;
+      data.password = document.getElementById("password").value ;
+      data.provider = document.getElementById("provider").value ;
+      var json = JSON.stringify(data);
+
+
+      var xhr = new XMLHttpRequest();
+
+      xhr.open("POST", "http://localhost:3000/usuario", true);
+      xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
+      xhr.onload = function () {
+        var users = JSON.parse(xhr.responseText);
+        if (xhr.status == "200") {
+          alert('Salvo com sucesso')
+        } else {
+          alert('Erro interno')
+        }
+      }
+      xhr.send(json);
+}
+  </script>
+
+{% endblock %}
